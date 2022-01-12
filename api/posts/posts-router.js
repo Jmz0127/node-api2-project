@@ -37,4 +37,22 @@ router.get('/:id', (req, res) => {
 		});
 });
 
+//POST
+router.post('/', (req, res) => {
+	Post.insert(req.body)
+		.then((posts) => {
+			if (posts) {
+				res.status(201).json(posts);
+			} else {
+				res.status(400).json({ message: 'Please provide title and contents for the post' });
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+			res.status(500).json({
+				message: 'There was an error while saving the post to the database'
+			});
+		});
+});
+
 module.exports = router;
